@@ -29,7 +29,8 @@ cd ..
 
 
 # get daemon and cli executable
-$daemon_url = (Get-Content build\DAEMON_URL -Raw).replace("OSNAME", "windows")
+$daemon_ver = (Get-Content app\package.json -Raw | ConvertFrom-Json).lbrySettings.lbrynetDaemonVersion
+$daemon_url = "https://github.com/lbryio/lbry/releases/download/v${daemon_ver}/lbrynet-daemon-v${daemon_ver}-windows.zip"
 Invoke-WebRequest -Uri $daemon_url -OutFile daemon.zip
 Expand-Archive daemon.zip -DestinationPath app\dist\
 dir app\dist\ # verify that daemon binary is there
